@@ -1,6 +1,3 @@
-> I wrote a little bit about this
-> [here](https://gist.github.com/chrismilson/c53b9bcdcdbf27863beb2693670c9abc)
-
 # `Swamp`
 
 I really like learning about different data structures. Orchestrating simple
