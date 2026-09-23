@@ -1,8 +1,8 @@
+import { Measure } from "./measure.ts";
 import {
     concat,
     EMPTY,
     locate,
-    Measure,
     measure_swamp,
     pop_l,
     pop_r,

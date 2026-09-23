@@ -1,3 +1,5 @@
+import { Measure } from "./measure.ts";
+
 type Wet2<T, M> = { kind: "Wet2"; measure: M; a: T; b: T };
 type Wet3<T, M> = { kind: "Wet3"; measure: M; a: T; b: T; c: T };
 type Wet<T, M> = Wet2<T, M> | Wet3<T, M>;
@@ -18,11 +20,6 @@ type Deep<T, M> = {
     right: Edge<T>;
 };
 export type Swamp<T, M> = Empty | Single<T> | Deep<T, M>;
-export type Measure<T, M> = {
-    empty(): M;
-    combine(a: M, b: M): M; // Should be associative
-    measure(x: T): M;
-};
 
 function Edge<T>(a: T): Edge1<T>;
 function Edge<T>(a: T, b: T): Edge2<T>;

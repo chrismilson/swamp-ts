@@ -1,7 +1,7 @@
+import { Measure } from "./measure.ts";
 import {
     concat,
     EMPTY,
-    Measure,
     measure_swamp,
     push_r,
     split_swamp,

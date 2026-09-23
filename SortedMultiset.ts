@@ -1,10 +1,10 @@
+import { Measure } from "./measure.ts";
 import {
     concat,
     EMPTY,
     excise,
     insert_at,
     locate,
-    Measure,
     pop_l,
     pop_r,
     push_r,
