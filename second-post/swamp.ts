@@ -68,10 +68,10 @@ function measure_edge<T, M>(M: Measure<T, M>, edge: Edge<T>): M {
     return acc;
 }
 
-function dessicate<T>(wet: Wet2<T, unknown>): Edge2<T>;
-function dessicate<T>(wet: Wet3<T, unknown>): Edge3<T>;
-function dessicate<T>(wet: Wet<T, unknown>): Edge2<T> | Edge3<T>; // EdgePoppable<T> & EdgePushable<T>;
-function dessicate<T>(wet: Wet<T, unknown>): Edge<T> {
+function desiccate<T>(wet: Wet2<T, unknown>): Edge2<T>;
+function desiccate<T>(wet: Wet3<T, unknown>): Edge3<T>;
+function desiccate<T>(wet: Wet<T, unknown>): Edge2<T> | Edge3<T>; // EdgePoppable<T> & EdgePushable<T>;
+function desiccate<T>(wet: Wet<T, unknown>): Edge<T> {
     if (wet.kind === "Wet2") {
         return Edge(wet.a, wet.b);
     }
@@ -142,7 +142,7 @@ function DeepR<T, M>(
     const popped = pop_r(waterproof(M), middle);
     if (popped !== undefined) {
         const [popped_middle, wet] = popped;
-        return Deep(M, left, popped_middle, dessicate(wet));
+        return Deep(M, left, popped_middle, desiccate(wet));
     }
     const [l, l_end] = pop_r_edge(left);
     if (l === undefined) return Single(l_end);
@@ -158,7 +158,7 @@ function DeepL<T, M>(
     const popped = pop_l(waterproof(M), middle);
     if (popped !== undefined) {
         const [wet, popped_middle] = popped;
-        return Deep(M, dessicate(wet), popped_middle, right);
+        return Deep(M, desiccate(wet), popped_middle, right);
     }
     const [r_end, r] = pop_l_edge(right);
     if (r === undefined) return Single(r_end);
@@ -406,7 +406,7 @@ export function split_swamp<T, M>(
             M,
             predicate,
             M.combine(left_acc, measure_swamp(WP_M, middle_left)),
-            dessicate(wet),
+            desiccate(wet),
         );
         return [
             DeepR(M, left, middle_left, wet_left),
