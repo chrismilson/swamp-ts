@@ -1,18 +1,18 @@
 import { Measure } from "./measure.ts";
 
-type Wet2<T, M> = { kind: "Wet2"; measure: M; a: T; b: T };
-type Wet3<T, M> = { kind: "Wet3"; measure: M; a: T; b: T; c: T };
-type Wet<T, M> = Wet2<T, M> | Wet3<T, M>;
-type Edge1<T> = { kind: "Edge1"; a: T };
-type Edge2<T> = { kind: "Edge2"; a: T; b: T };
-type Edge3<T> = { kind: "Edge3"; a: T; b: T; c: T };
-type Edge4<T> = { kind: "Edge4"; a: T; b: T; c: T; d: T };
-type Edge<T> = Edge1<T> | Edge2<T> | Edge3<T> | Edge4<T>;
-type EdgePushable<T> = Edge1<T> | Edge2<T> | Edge3<T>;
+export type Wet2<T, M> = { kind: "Wet2"; measure: M; a: T; b: T };
+export type Wet3<T, M> = { kind: "Wet3"; measure: M; a: T; b: T; c: T };
+export type Wet<T, M> = Wet2<T, M> | Wet3<T, M>;
+export type Edge1<T> = { kind: "Edge1"; a: T };
+export type Edge2<T> = { kind: "Edge2"; a: T; b: T };
+export type Edge3<T> = { kind: "Edge3"; a: T; b: T; c: T };
+export type Edge4<T> = { kind: "Edge4"; a: T; b: T; c: T; d: T };
+export type Edge<T> = Edge1<T> | Edge2<T> | Edge3<T> | Edge4<T>;
+export type EdgePushable<T> = Edge1<T> | Edge2<T> | Edge3<T>;
 
-type Empty = { kind: "Empty" };
-type Single<T> = { kind: "Single"; value: T };
-type Deep<T, M> = {
+export type Empty = { kind: "Empty" };
+export type Single<T> = { kind: "Single"; value: T };
+export type Deep<T, M> = {
     kind: "Deep";
     measure: M;
     left: Edge<T>;
@@ -21,12 +21,12 @@ type Deep<T, M> = {
 };
 export type Swamp<T, M> = Empty | Single<T> | Deep<T, M>;
 
-function Edge<T>(a: T): Edge1<T>;
-function Edge<T>(a: T, b: T): Edge2<T>;
-function Edge<T>(a: T, b: T, c: T): Edge3<T>;
-function Edge<T>(a: T, b: T, c: T, d: T): Edge4<T>;
-function Edge<T>(...values: T[]): Edge<T>;
-function Edge<T>(...values: T[]): Edge<T> {
+export function Edge<T>(a: T): Edge1<T>;
+export function Edge<T>(a: T, b: T): Edge2<T>;
+export function Edge<T>(a: T, b: T, c: T): Edge3<T>;
+export function Edge<T>(a: T, b: T, c: T, d: T): Edge4<T>;
+export function Edge<T>(...values: T[]): Edge<T>;
+export function Edge<T>(...values: T[]): Edge<T> {
     if (values.length === 1) {
         return { kind: "Edge1", a: values[0] };
     }
@@ -44,7 +44,7 @@ function Edge<T>(...values: T[]): Edge<T> {
         d: values[3],
     };
 }
-function edge_to_arr<T>(edge: Edge<T> | undefined): T[] {
+export function edge_to_arr<T>(edge: Edge<T> | undefined): T[] {
     const result: T[] = [];
     if (edge === undefined) return result;
     result.push(edge.a);
@@ -57,10 +57,10 @@ function edge_to_arr<T>(edge: Edge<T> | undefined): T[] {
     // edge.kind === "Edge4"
     return result;
 }
-function is_pushable<T>(edge: Edge<T>): edge is EdgePushable<T> {
+export function is_pushable<T>(edge: Edge<T>): edge is EdgePushable<T> {
     return edge.kind !== "Edge4";
 }
-function measure_edge<T, M>(M: Measure<T, M>, edge: Edge<T>): M {
+export function measure_edge<T, M>(M: Measure<T, M>, edge: Edge<T>): M {
     let acc = M.empty();
     for (const value of edge_to_arr(edge)) {
         acc = M.combine(acc, M.measure(value));
@@ -68,10 +68,10 @@ function measure_edge<T, M>(M: Measure<T, M>, edge: Edge<T>): M {
     return acc;
 }
 
-function desiccate<T>(wet: Wet2<T, unknown>): Edge2<T>;
-function desiccate<T>(wet: Wet3<T, unknown>): Edge3<T>;
-function desiccate<T>(wet: Wet<T, unknown>): Edge2<T> | Edge3<T>; // EdgePoppable<T> & EdgePushable<T>;
-function desiccate<T>(wet: Wet<T, unknown>): Edge<T> {
+export function desiccate<T>(wet: Wet2<T, unknown>): Edge2<T>;
+export function desiccate<T>(wet: Wet3<T, unknown>): Edge3<T>;
+export function desiccate<T>(wet: Wet<T, unknown>): Edge2<T> | Edge3<T>; // EdgePoppable<T> & EdgePushable<T>;
+export function desiccate<T>(wet: Wet<T, unknown>): Edge<T> {
     if (wet.kind === "Wet2") {
         return Edge(wet.a, wet.b);
     }
@@ -79,9 +79,9 @@ function desiccate<T>(wet: Wet<T, unknown>): Edge<T> {
     return Edge(wet.a, wet.b, wet.c);
 }
 
-function Wet<T, M>(M: Measure<T, M>, a: T, b: T): Wet2<T, M>;
-function Wet<T, M>(M: Measure<T, M>, a: T, b: T, c: T): Wet3<T, M>;
-function Wet<T, M>(M: Measure<T, M>, ...values: T[]): Wet<T, M> {
+export function Wet<T, M>(M: Measure<T, M>, a: T, b: T): Wet2<T, M>;
+export function Wet<T, M>(M: Measure<T, M>, a: T, b: T, c: T): Wet3<T, M>;
+export function Wet<T, M>(M: Measure<T, M>, ...values: T[]): Wet<T, M> {
     if (values.length === 2) {
         const [a, b] = values;
         const measure = M.combine(M.measure(a), M.measure(b));
@@ -94,7 +94,7 @@ function Wet<T, M>(M: Measure<T, M>, ...values: T[]): Wet<T, M> {
     );
     return { kind: "Wet3", measure, a: values[0], b: values[1], c: values[2] };
 }
-function waterproof<T, M>(M: Measure<T, M>): Measure<Wet<T, M>, M> {
+export function waterproof<T, M>(M: Measure<T, M>): Measure<Wet<T, M>, M> {
     return {
         empty: M.empty,
         combine: M.combine,
@@ -103,13 +103,13 @@ function waterproof<T, M>(M: Measure<T, M>): Measure<Wet<T, M>, M> {
 }
 
 export const EMPTY: Empty = { kind: "Empty" };
-function is_empty(swamp: Swamp<unknown, unknown>): swamp is Empty {
+export function is_empty(swamp: Swamp<unknown, unknown>): swamp is Empty {
     return swamp.kind === "Empty";
 }
-function Single<T>(value: T): Single<T> {
+export function Single<T>(value: T): Single<T> {
     return { kind: "Single", value };
 }
-function is_single<T>(swamp: Swamp<T, unknown>): swamp is Single<T> {
+export function is_single<T>(swamp: Swamp<T, unknown>): swamp is Single<T> {
     return swamp.kind === "Single";
 }
 export function measure_swamp<T, M>(M: Measure<T, M>, swamp: Swamp<T, M>): M {
@@ -117,7 +117,7 @@ export function measure_swamp<T, M>(M: Measure<T, M>, swamp: Swamp<T, M>): M {
     if (is_single(swamp)) return M.measure(swamp.value);
     return swamp.measure; // cached!
 }
-function Deep<T, M>(
+export function Deep<T, M>(
     M: Measure<T, M>,
     left: Edge<T>,
     middle: Swamp<Wet<T, M>, M>,
@@ -132,7 +132,7 @@ function Deep<T, M>(
     );
     return { kind: "Deep", measure, left, middle, right };
 }
-function DeepR<T, M>(
+export function DeepR<T, M>(
     M: Measure<T, M>,
     left: Edge<T>,
     middle: Swamp<Wet<T, M>, M>,
@@ -148,7 +148,7 @@ function DeepR<T, M>(
     if (l === undefined) return Single(l_end);
     return Deep(M, l, EMPTY, Edge(l_end));
 }
-function DeepL<T, M>(
+export function DeepL<T, M>(
     M: Measure<T, M>,
     left: Edge<T> | undefined, // undefined means empty left edge
     middle: Swamp<Wet<T, M>, M>,
@@ -165,7 +165,7 @@ function DeepL<T, M>(
     return Deep(M, Edge(r_end), EMPTY, r);
 }
 
-function push_r_edge<T>(
+export function push_r_edge<T>(
     edge: Edge<T> | undefined,
     value: T,
 ): Edge<T> {
@@ -211,7 +211,7 @@ export function push_r_all<T, M>(
     return acc;
 }
 
-function push_l_edge<T>(value: T, edge: Edge<T> | undefined): Edge<T> {
+export function push_l_edge<T>(value: T, edge: Edge<T> | undefined): Edge<T> {
     if (edge === undefined) return Edge(value);
     if (edge.kind === "Edge1") return Edge(value, edge.a);
     if (edge.kind === "Edge2") return Edge(value, edge.a, edge.b);
@@ -254,7 +254,7 @@ export function push_l_all<T, M>(
     return acc;
 }
 
-function pop_r_edge<T>(edge: Edge<T>): [Edge<T> | undefined, T] {
+export function pop_r_edge<T>(edge: Edge<T>): [Edge<T> | undefined, T] {
     if (edge.kind === "Edge1") return [undefined, edge.a];
     if (edge.kind === "Edge2") return [Edge(edge.a), edge.b];
     if (edge.kind === "Edge3") return [Edge(edge.a, edge.b), edge.c];
@@ -271,7 +271,7 @@ export function pop_r<T, M>(
     const [popped_right, r] = pop_r_edge(right);
     return [DeepR(M, left, middle, popped_right), r];
 }
-function pop_l_edge<T>(edge: Edge<T>): [T, Edge<T> | undefined] {
+export function pop_l_edge<T>(edge: Edge<T>): [T, Edge<T> | undefined] {
     if (edge.kind === "Edge1") return [edge.a, undefined];
     if (edge.kind === "Edge2") return [edge.a, Edge(edge.b)];
     if (edge.kind === "Edge3") return [edge.a, Edge(edge.b, edge.c)];
@@ -289,7 +289,7 @@ export function pop_l<T, M>(
     return [l, DeepL(M, popped_left, middle, right)];
 }
 
-function moisten_all<T, M>(M: Measure<T, M>, ...values: T[]): Wet<T, M>[] {
+export function moisten_all<T, M>(M: Measure<T, M>, ...values: T[]): Wet<T, M>[] {
     const result: Wet<T, M>[] = [];
     for (let i = 0; i < values.length - 4; i += 3) {
         result.push(Wet(M, ...values.slice(i, i + 3) as [T, T, T]));
@@ -312,7 +312,7 @@ function moisten_all<T, M>(M: Measure<T, M>, ...values: T[]): Wet<T, M>[] {
     }
     return result;
 }
-function app3<T, M>(
+export function app3<T, M>(
     M: Measure<T, M>,
     left: Swamp<T, M>,
     middle: T[],
@@ -355,7 +355,7 @@ export function concat<T, M>(
 
 /// Now the new stuff
 
-function split_edge<T, M>(
+export function split_edge<T, M>(
     M: Measure<T, M>,
     predicate: (m: M) => boolean,
     init: M,
