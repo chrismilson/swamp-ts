@@ -79,8 +79,8 @@ Let's say `f(n)` is `O(2^n)`, so `f(n) < C * 2^n` for all `n > N_0`. Keep the
 same `C` and the same `N_0`:
 
 ```
-f(n) < C * 2^n // because n > N_0 <= C * 3^n // because 2^n <= 3^n, for every n,
-easy, no exceptions.
+f(n) < C * 2^n // because n > N_0
+    <= C * 3^n // because 2^n <= 3^n, for every n, easy, no exceptions.
 ```
 
 Done. Easiest one of the lot. (The same trick shows anything `O(a^n)` is also
@@ -124,9 +124,7 @@ Let's say `f(n)` is `O(k^n)`, so `f(n) < C * k^n` for all `n > N_0`. Pick
 `N_0' = max(N_0, 2k)` and `C' = C * k^k`:
 
 ```
-f(n) < C * k^n // because n > N_0', and N_0' >= N_0 <= C * k^k * n! // because
-k^n <= k^k * n! when n >= 2k = C' * n! // substitute C' = C * k^k
-```
-
-```
+f(n) < C * k^n      // because n > N_0', and N_0' >= N_0
+    <= C * k^k * n! // because k^n <= k^k * n! when n >= 2k
+     = C' * n!      // substitute C' = C * k^k
 ```
