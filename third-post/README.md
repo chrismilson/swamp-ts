@@ -88,7 +88,7 @@ Done. Easiest one of the lot. (The same trick shows anything `O(a^n)` is also
 
 ### There are some things which are O(3^n) but are NOT O(2^n)
 
-Let's take `f(n) := 3^n`. It's obviously `O(3^n)` — pick `C = 1` and `N_0 = 0`.
+Let's take `f(n) := 3^n`. It's obviously `O(3^n)` — pick `C = 2` and `N_0 = 0`.
 
 Now let's assume (expecting a contradiction), that it's also `O(2^n)`. Then
 there are some `C` and `N_0` such that `3^n < C * 2^n` for all `n > N_0`. Divide
@@ -110,7 +110,7 @@ is:
 n! = 1 * 2 * 3 * ... * n
 ```
 
-Say `n >= 2k`. Then the last `n - k` factors (`(n - k)`, `(n-k)+1`, `(n-k)+2`,
+Say `n > 2k`. Then the last `n - k + 1` factors (`(n - k)`, `(n-k)+1`, `(n-k)+2`,
 ..., `n`) are all at least `k`. (let that sink in as to why) So if we divide
 `n!` by the small factors at the start, (the ones less than `n - k`) we decrease
 it, and if we replace each of the `(n-k) + i` with just `k`, that decreases it
@@ -121,7 +121,7 @@ And `k^k` is just some constant, so we bake it straight into `C` like we always
 do.
 
 Let's say `f(n)` is `O(k^n)`, so `f(n) < C * k^n` for all `n > N_0`. Pick
-`N_0' = max(N_0, 2k)` and `C' = C * k^k`:
+`N_0' = max(N_0, 2k + 1)` and `C' = C * k^k`:
 
 ```
 f(n) < C * k^n      // because n > N_0', and N_0' >= N_0
