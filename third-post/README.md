@@ -66,11 +66,11 @@ and then put them here so that there is less clutter in there)
 ```
 f(n) < C * n^k                             // Because f(n) is O(n^k)
      = C * ((2^k * k!) / (2^k * k!)) * n^k // Just multiplying by 1, nothing to see here
-     = C' * (n^k / (2^k * k!))             // Changing brackets and substituting C'
-     = C' * (n/2)^k / k!                   // Again, rearranging
-    <= C' * (n! / (n-k)!) / k!             // What we found when n > 2k, and n > N_0 >= 2k
+     = (C * 2^k * k!) * (n^k / (2^k * k!)) // Changing brackets
+     = C' * (n/2)^k / k!                   // Rearrange and substitute C'
+    <= C' * (n! / (n-k)!) / k!             // What we found about (n/2)^k when n > 2k, which we have: n > N_0 >= 2k
      = C' * Ch(n, k)                       // Just replacing factorials with Ch
-    <= C' * 2^k
+    <= C' * 2^n
 ```
 
 ### Anything O(2^n) is also O(3^n)
