@@ -110,11 +110,11 @@ is:
 n! = 1 * 2 * 3 * ... * n
 ```
 
-Say `n > 2k`. Then the last `n - k + 1` factors (`(n - k)`, `(n-k)+1`, `(n-k)+2`,
-..., `n`) are all at least `k`. (let that sink in as to why) So if we divide
-`n!` by the small factors at the start, (the ones less than `n - k`) we decrease
-it, and if we replace each of the `(n-k) + i` with just `k`, that decreases it
-too. We get `n! > k^{n - k}`. Which we can rearrange to `n! > k^n / k^k`.
+Say `n > 2k`. Then the last `n - k` factors (`k + 1`, `k + 2`, `k + 3`, ...,
+`n`) are all at least `k`. So if we divide `n!` by the small factors at the
+start, (the ones less than `n - k`) we decrease it, and if we replace each of
+the `n - (n-k) + i` with just `k`, that decreases it too. We get
+`n! > k^{n - k}`. Which we can rearrange to `n! > k^n / k^k`.
 
 If we multiply both sides by `k^k`, we get `k^n <= k^k * n!` for all `n >= 2k`.
 And `k^k` is just some constant, so we bake it straight into `C` like we always
