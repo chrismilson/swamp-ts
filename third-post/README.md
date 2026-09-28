@@ -44,14 +44,18 @@ Before we get into it, just want to reiterate a couple of classics:
   they like will have `2^n` different possible ways they could do that. (for
   every item of the `n` there are two choices; take or not take. Multiply the
   two for every item; `2^n`)
-- `Ch(n, k)` is the number of subsets on `n` elements with `k` elements exactly.
-  (often pronounced "n choose k") It's equal to `n!/(k!(n-k)!)` (line them all
-  up in some random permutation (of which there are `n!`) draw a line such that
-  you have exactly `k` on the left. You could have had `k!` permutations that
-  gave you the same `k` on the left, and `(n-k)!` permutations that gave you the
-  same `n-k` on the right.)
-- `2^n >= C(n, k)`, hopefully it doesn't take much convincing that "all subsets"
-  contains "all subsets, with size `k`".
+- `Ch(n, k)` is the number of subsets of `n` with `k` elements exactly. (often
+  pronounced "n choose k") It's equal to `n!/(k!(n-k)!)` (line them all up in
+  some random permutation (of which there are `n!`) draw a line such that you
+  have exactly `k` on the left. You could have had `k!` permutations that gave
+  you the same `k` on the left, and `(n-k)!` permutations that gave you the same
+  `n-k` on the right.)
+- `2^n >= Ch(n, k)`, hopefully it doesn't take much convincing that "all
+  subsets" contains "all subsets, with size `k`".
+
+> In the first exercise we just asserted that `n <= 2^n`, but with the same
+> set-counting reasoning, you can see that n is just the number of subsets of
+> size 1!
 
 Ok. Remembering that `k` is a constant, notice that if `n > 2k`, then because
 `n!/(n-k)!` is `n * (n-1) * ... * (n - k  + 1)` and all `k` of those terms are
@@ -68,7 +72,7 @@ f(n) < C * n^k                             // Because f(n) is O(n^k)
      = C * ((2^k * k!) / (2^k * k!)) * n^k // Just multiplying by 1, nothing to see here
      = (C * 2^k * k!) * (n^k / (2^k * k!)) // Changing brackets
      = C' * (n/2)^k / k!                   // Rearrange and substitute C'
-    <= C' * (n! / (n-k)!) / k!             // What we found about (n/2)^k when n > 2k, which we have: n > N_0 >= 2k
+    <= C' * (n! / (n-k)!) / k!             // What we found about (n/2)^k when n > 2k, which we have: n > N_0' >= 2k
      = C' * Ch(n, k)                       // Just replacing factorials with Ch
     <= C' * 2^n
 ```
@@ -112,8 +116,8 @@ n! = 1 * 2 * 3 * ... * n
 
 Say `n > 2k`. Then the last `n - k` factors (`k + 1`, `k + 2`, `k + 3`, ...,
 `n`) are all at least `k`. So if we divide `n!` by the small factors at the
-start, (the ones less than `n - k`) we decrease it, and if we replace each of
-the `n - (n-k) + i` with just `k`, that decreases it too. We get
+start, (`1`, `2`, ..., `k`, all less than `n - k`) we decrease it, and if we
+replace each of the `k + i ... n` with just `k`, that decreases it too. We get
 `n! > k^{n - k}`. Which we can rearrange to `n! > k^n / k^k`.
 
 If we multiply both sides by `k^k`, we get `k^n <= k^k * n!` for all `n >= 2k`.
